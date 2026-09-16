@@ -1,0 +1,122 @@
+Careerloom Proprietary Notice and Limited Viewing Terms
+Version 1.0 — 2026-09-16
+
+Copyright (c) 2026 Careerloom authors and applicable rights holders.
+All rights reserved.
+
+Repository: https://github.com/adu-labs/careerloom
+Maintained through the GitHub organization adu-labs.
+The organization name identifies the project workspace; it is not a statement
+that the organization is a separate legal entity or owns third-party rights.
+
+1. Scope and ownership
+
+These terms apply to the copyrightable original source code, documentation,
+design materials, prompts, workflow definitions, templates, and other original
+materials in this repository (the "Materials"), only to the extent the
+applicable rights holders have the right to impose these terms. Ownership
+remains with the applicable rights holders. No ownership is transferred.
+
+Third-party materials, dependencies, quotations, and separately licensed
+components are excluded and remain subject to their own applicable terms.
+A reference or hyperlink does not relicense the referenced work. These terms
+do not claim copyright in unprotectable ideas, facts, methods, functionality,
+independently created work, or material in which no copyright subsists.
+
+2. Limited permission; not open source
+
+You may view and read the publicly displayed Materials on GitHub for personal
+inspection. This is not an open-source license. Public availability does not
+grant a general right to use, copy, modify, redistribute, or commercialize the
+Materials. Attribution, noncommercial intent, educational purpose, or making
+modifications does not by itself supply a license for otherwise restricted use.
+
+3. Reserved uses
+
+Except as expressly permitted by Section 2, Section 4, a separately applicable
+license, or prior written authorization from the applicable rights holder,
+no permission is granted to:
+
+(a) reproduce, download for reuse, distribute, publish, sublicense, sell, rent,
+    or otherwise provide copies of the Materials outside permitted platform
+    functionality;
+(b) modify, translate, adapt, or create derivative works of protected Materials,
+    or incorporate protected portions into another project, product, service,
+    template, extension, or development framework;
+(c) build, execute, deploy, host, or operate the Materials as a personal,
+    internal, commercial, or noncommercial application or hosted service;
+(d) extract protected Materials into datasets, or use protected Materials for
+    machine-learning training, fine-tuning, distillation, or model evaluation;
+(e) remove or falsify copyright, attribution, or proprietary notices in copies
+    where retention of those notices is required; or
+(f) use project names, logos, or other branding to imply authorization,
+    affiliation, sponsorship, or endorsement.
+
+These reservations concern protected Materials and rights actually held.
+They do not prohibit independent implementation of ideas merely because the
+implementation has similar functionality.
+
+4. Platform rights and mandatory legal exceptions
+
+Nothing in these terms limits rights already granted under the applicable
+GitHub Terms of Service, including rights necessary for GitHub to provide its
+service and applicable rights to view and fork public repositories through
+GitHub's functionality. These terms do not purport to revoke such grants or
+impose additional conditions on the exercise of those existing rights.
+A permitted GitHub fork does not, by itself, grant a broader license to use
+the Materials outside those platform rights.
+
+Nothing here restricts a use that applicable law permits without permission,
+including applicable statutory exceptions and limitations. Separate valid
+licenses and authorizations remain governed by their own terms. These terms
+do not retroactively withdraw rights already validly granted.
+
+5. Additional authorization
+
+Other uses require a written authorization identifying the permitted Materials,
+purpose, scope, and any duration or redistribution conditions, issued by a
+person authorized to license the applicable rights. A star, fork, issue reply,
+public repository setting, or technical ability to access the Materials does
+not by itself constitute that authorization.
+
+Requests may be directed to the maintainer through the GitHub profile
+https://github.com/adu-works or a licensing-request issue in the repository.
+Do not place confidential information in a public issue. The maintainer must
+have authority from the applicable rights holder for any authorization given.
+
+6. No warranties; limitation of liability
+
+To the maximum extent permitted by applicable law, the Materials are provided
+"AS IS", without warranties of any kind, express or implied, including
+merchantability, fitness for a particular purpose, accuracy, and
+noninfringement. To the maximum extent permitted by applicable law, the authors
+and rights holders shall not be liable for damages or other liability arising
+from the Materials or their use. Nothing excludes liability that cannot
+lawfully be excluded.
+
+7. Enforcement and interpretation
+
+Rights holders reserve remedies available under applicable law for unauthorized
+uses of protected Materials. This notice does not establish automatic damages,
+create rights not recognized by law, or guarantee that every restriction is
+enforceable in every jurisdiction. If a provision is unenforceable, remaining
+provisions apply to the extent permitted by law. Changes in repository
+visibility cannot recall copies already obtained by others.
+
+The English text above is the controlling version of this notice. The Chinese
+summary below is explanatory and does not expand or reduce the English terms.
+
+中文说明（以英文正文为准）
+
+本项目公开展示，但不采用开源许可证。对于权利人有权控制的原创代码、
+文档、设计材料、提示、工作流和模板，保留全部权利。
+
+除 GitHub 平台条款、适用法律、第三方独立许可或权利人另行书面授权允许
+的范围外，仅允许在 GitHub 上查看与阅读；不授予复制复用、修改改编、
+再分发、商业使用、运行部署、提供托管服务或用于模型训练、微调、蒸馏
+及评测的许可。非商业、学习用途或署名不当然构成额外授权。
+
+GitHub 平台允许的查看与 fork 权利不受本声明撤销。第三方组件依其原有
+条款处理；本声明不独占不受著作权保护的想法、事实、方法或功能，也不
+禁止独立实现类似功能。公开不代表可以随意复用，保留权利也不代表能够
+从技术上阻止复制，或在以后转为私有时收回已存在的副本。
