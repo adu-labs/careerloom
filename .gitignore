@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.next/
+coverage/
+.sites-runtime/
+.openai/
+__pycache__/
+*.pyc
+.local-history/
+# prototype/dist is intentionally tracked: it contains the maintained demo.
