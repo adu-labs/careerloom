@@ -13,3 +13,6 @@ __pycache__/
 *.pyc
 .local-history/
 # prototype/dist is intentionally tracked: it contains the maintained demo.
+# Compiled production sources; prototype/dist remains tracked.
+apps/*/build/
+*.tsbuildinfo
