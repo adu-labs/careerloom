@@ -16,6 +16,8 @@ Careerloom 为已确定的项目名。历史文档和原型中的“启程 / Qic
 
 ## 文档入口
 
+当前按功能实施：[实现顺序与 Review 规划](tasks/implementation-sequence.md)。
+
 - [产品研究与功能设计](docs/design/找工作工作台-产品研究与功能设计.md)
 - [技术实现方案](docs/design/找工作工作台-技术实现方案.md)
 - [工作记录与 Agent 工作台](docs/design/工作记录与Agent工作台-产品架构与持续优化.md)
@@ -23,6 +25,20 @@ Careerloom 为已确定的项目名。历史文档和原型中的“启程 / Qic
 - [实施规划](tasks/plan.md)
 - [主体任务](tasks/todo.md)、[扩展任务](tasks/extension.md)、[Agent 工作台任务](tasks/agent-workspace.md)
 - [架构决策](docs/decisions/)
+
+## 后端开发（T01a）
+
+使用 Node.js 24（本次验证为 24.14.0）和 npm，在仓库根目录运行：
+
+```sh
+npm ci --ignore-scripts
+npm run check
+npm run start:api
+```
+
+默认仅监听 `127.0.0.1:3001`；`GET /v1/health/live` 返回进程存活状态，不代表数据库或业务已就绪。`npm run check` 包含类型检查、编译和测试，单独编译可运行 `npm run build`。按 Ctrl+C 停止服务。
+
+环境配置见 [.env.example](.env.example)。程序读取进程环境，不自动加载 `.env` 文件；例如 `API_PORT=3101 npm run start:api`。staging/production 要求明确设置 `API_HOST` 与 `API_PORT`。当前未接入数据库、登录、Web 或真实 AI。
 
 ## 原型预览
 
