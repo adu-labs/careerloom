@@ -59,3 +59,5 @@ Agent 开发以 [AGENTS.md](AGENTS.md) 为准：前后端充分注释；每个�
 不要提交密钥、真实求职资料、运行缓存或本机部署配置。本项目采用 [Careerloom 专有条款](LICENSE)，不授予通用复制、改作、再分发、运行部署、商用或模型训练许可；GitHub 平台权利、法定例外及另行授权除外。第三方材料与依赖按各自许可证和使用范围管理。
 
 许可申请可通过 [adu-works](https://github.com/adu-works) 或仓库 issue 联系维护者；请勿在公开 issue 中提供机密资料。外部贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+当前待审阅：[T01a API启动、配置校验与存活检查](docs/implementation-review/T01a-api-bootstrap.md)，代码基线 `6fa40c5`。

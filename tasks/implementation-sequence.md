@@ -47,3 +47,5 @@ T01a 主要逻辑限定为配置、应用装配、入口和两份测试文件；
 - 有已执行测试与复现命令；写入 `docs/implementation-review/<任务ID>-<功能>.md`。
 - 用户通过后再创建 `docs/learning/` 对应教程，更新链接、删除临时审阅文档，保留Git历史。
 - 明确当前实现、待review、已通过和生产上线的区别，按功能保留进度，不虚构完整平台交付时间。
+
+当前待审阅：[T01a API启动、配置校验与存活检查](../docs/implementation-review/T01a-api-bootstrap.md)，代码基线 `6fa40c5`。
