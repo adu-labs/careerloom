@@ -10,7 +10,7 @@ Careerloom 是面向职业积累与求职的 AI 工作台：记录工作与学�
 
 ## 当前状态
 
-本仓库保存产品研究、技术方案、实施规划和可交互原型。正式服务尚未实现；原型中的身份、交易和部分 AI 功能是演示，不代表生产能力。
+本仓库保存产品研究、技术方案、实施规划、可交互原型，以及正在实现的正式项目代码。已完成 API 启动与 Web 连接检查，均待用户 review；尚未实现生产业务或上线。原型中的身份、交易和部分 AI 功能是演示，不代表生产能力。
 
 Careerloom 为已确定的项目名。历史文档和原型中的“启程 / Qicheng”属于早期名称，暂保留以便追溯。项目归属 `adu-labs`。开发阶段仓库公开，计划在准备正式上线时重新设为私有；公开期间的已有克隆或分叉无法通过修改可见性收回。
 
@@ -26,19 +26,35 @@ Careerloom 为已确定的项目名。历史文档和原型中的“启程 / Qic
 - [主体任务](tasks/todo.md)、[扩展任务](tasks/extension.md)、[Agent 工作台任务](tasks/agent-workspace.md)
 - [架构决策](docs/decisions/)
 
-## 后端开发（T01a）
+## 本地开发（T01a / T01b）
 
 使用 Node.js 24（本次验证为 24.14.0）和 npm，在仓库根目录运行：
 
 ```sh
 npm ci --ignore-scripts
 npm run check
-npm run start:api
+npm run build
 ```
 
-默认仅监听 `127.0.0.1:3001`；`GET /v1/health/live` 返回进程存活状态，不代表数据库或业务已就绪。`npm run check` 包含类型检查、编译和测试，单独编译可运行 `npm run build`。按 Ctrl+C 停止服务。
+`npm run check` 执行两个 workspace 的类型检查和测试；`npm run build` 编译 API 与 Web。当前共 18 项测试（API 8 项、Web 10 项）。HTTP 测试会监听本机临时端口，需要允许本地网络。
 
-环境配置见 [.env.example](.env.example)。程序读取进程环境，不自动加载 `.env` 文件；例如 `API_PORT=3101 npm run start:api`。staging/production 要求明确设置 `API_HOST` 与 `API_PORT`。当前未接入数据库、登录、Web 或真实 AI。
+分别在两个终端启动：
+
+```sh
+# 终端 1：API 默认监听 127.0.0.1:3001
+npm run start:api
+
+# 终端 2：Web 开发服务，默认监听 127.0.0.1:3000
+npm run dev:web
+```
+
+打开 [本地 Web](http://127.0.0.1:3000)，可以检查真实连接并重试。停止 API 后点击「重新检查」会进入失败状态；重新启动 API 后点击「重试连接」恢复。两个终端分别按 Ctrl+C 停止。
+
+验证 Web 生产构建时，第二个终端改用 `API_ORIGIN=http://127.0.0.1:3001 npm run start:web`。API 必须仍然运行。生产模式强制显式设置 `API_ORIGIN`；开发模式默认指向本机 API。同源 `/api/health` 只读取 API 的 `/v1/health/live`，不开放通用代理或宽泛 CORS。
+
+环境变量示例见 [.env.example](.env.example)。根目录示例仅供说明，不会自动加载；API 仅读取进程环境，例如 `API_PORT=3101 npm run start:api`。Web 遵循 Next.js 的工作目录 `.env*` 规则，推荐如上显式传参；修改 API 端口时也需同步 Web 的 `API_ORIGIN`。API 的 staging/production 要求明确设置 `API_HOST` 与 `API_PORT`。
+
+连接成功仅说明 HTTP 进程能响应；数据库、登录、简历与真实 AI 尚未接入。暂未配置 lint，不能把类型检查当成 lint 已通过。
 
 ## 原型预览
 
@@ -60,4 +76,7 @@ Agent 开发以 [AGENTS.md](AGENTS.md) 为准：前后端充分注释；每个�
 
 许可申请可通过 [adu-works](https://github.com/adu-works) 或仓库 issue 联系维护者；请勿在公开 issue 中提供机密资料。外部贡献规则见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-当前待审阅：[T01a API启动、配置校验与存活检查](docs/implementation-review/T01a-api-bootstrap.md)，代码基线 `6fa40c5`。
+当前待审阅：
+
+- [T01a API启动、配置校验与存活检查](docs/implementation-review/T01a-api-bootstrap.md)，代码基线 `6fa40c5`。
+- [T01b Web骨架与API连接](docs/implementation-review/T01b-web-bootstrap.md)，代码基线 `c36c7a5`。
