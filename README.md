@@ -36,7 +36,7 @@ npm run check
 npm run build
 ```
 
-`npm run check` 执行两个 workspace 的类型检查和测试；`npm run build` 编译 API 与 Web。当前共 18 项测试（API 8 项、Web 10 项）。HTTP 测试会监听本机临时端口，需要允许本地网络。
+`npm run check` 执行 API/Web 类型检查、原型资源与语法检查、文档相对链接检查，以及全部 27 项回归（API 8、Web 10、原型 9）。`npm run build` 编译 API 与 Web。HTTP 测试会监听本机临时端口，需要允许本地网络。GitHub Actions 使用相同命令；推送与 PR 自动检查，不执行部署。
 
 分别在两个终端启动：
 
@@ -54,7 +54,7 @@ npm run dev:web
 
 环境变量示例见 [.env.example](.env.example)。根目录示例仅供说明，不会自动加载；API 仅读取进程环境，例如 `API_PORT=3101 npm run start:api`。Web 遵循 Next.js 的工作目录 `.env*` 规则，推荐如上显式传参；修改 API 端口时也需同步 Web 的 `API_ORIGIN`。API 的 staging/production 要求明确设置 `API_HOST` 与 `API_PORT`。
 
-连接成功仅说明 HTTP 进程能响应；数据库、登录、简历与真实 AI 尚未接入。暂未配置 lint，不能把类型检查当成 lint 已通过。
+连接成功仅说明 HTTP 进程能响应；数据库、登录、简历与真实 AI 尚未接入。暂未配置 lint，不能把类型检查当成 lint 已通过。可单独运行 `npm run test:prototype`、`npm run check:prototype` 或 `npm run check:docs` 做对应检查。
 
 ## 原型预览
 
@@ -67,6 +67,10 @@ python3 -m http.server 8080 --directory prototype/dist
 ```
 
 打开 http://localhost:8080 。原型主要使用浏览器本地数据，详见[原型说明](prototype/README.md)。已发布至 [Careerloom](https://qicheng-career-workbench.hlb424559864.chatgpt.site)，沿用原项目、网址和仅本人访问范围。本轮发布的是静态交互原型，发布记录与教学见 UI01 文档。
+
+## 本轮质量完善
+
+Q01 修复了空简历库刷新、模板名称转义、文件读取竞争与损坏快照保护，并加入自动检查；实现与验证完成，用户审阅待完成，见 [Q01 审阅记录](docs/implementation-review/Q01-prototype-reliability.md)。该变更尚未替换已发布的 UI01 v4。
 
 ## 工程约定
 

@@ -8,8 +8,11 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "typecheck": "npm run typecheck --workspaces",
-    "test": "npm run test --workspaces",
-    "check": "npm run typecheck && npm test",
+    "test": "npm run test --workspaces && npm run test:prototype",
+    "test:prototype": "node --test prototype/test/*.test.mjs",
+    "check:prototype": "node scripts/check-prototype.mjs",
+    "check:docs": "node scripts/check-doc-links.mjs",
+    "check": "npm run typecheck && npm run check:prototype && npm run check:docs && npm test",
     "start:api": "npm run start --workspace @careerloom/api",
     "dev:web": "npm run dev --workspace @careerloom/web",
     "start:web": "npm run start --workspace @careerloom/web"

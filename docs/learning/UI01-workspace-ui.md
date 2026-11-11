@@ -177,6 +177,8 @@ Web 验证仍使用 `npm run typecheck --workspace @careerloom/web`、`npm run b
 
 按用户已批准流程，本篇完成后对应 UI01 临时审阅文档从当前版本移除；T01a、T01b 的审阅文档和未批准状态继续保留。
 
+后续维护：Q01 对本机存储和模板导入增加了保护，修改了部分原型文件；下表保留 UI01 获批基线，当前变更见 [Q01 审阅记录](../implementation-review/Q01-prototype-reliability.md)，不沿用 UI01 批准覆盖新行为。
+
 ## 10. 精确源码基线
 
 ```text

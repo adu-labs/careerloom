@@ -14,7 +14,47 @@ function templatePreview(t){const fake={person:'你的姓名',headline:'求职�
 function templateLibrary(){return head('我的模板','内置、自己导入、自己设计。模板不会自动公开或上架。',act('template-create','自定义模板','btn')+act('template-import',I('plus')+' 导入模板','btn primary'))+`<div class="note" style="margin-bottom:22px">初始默认：中文 A4 单栏 · 内容与版式分开保存 · 投递导出 PDF。你可以将喜欢的模板设为默认。</div><div class="template-library-grid">${availableTemplates().map(t=>{const own=state.privateTemplates.find(x=>x.id===t.id);return `<section class="card"><div class="row between"><h2>${E(t.name)}</h2>${pill(state.defaultTemplate===t.id?'默认模板':own?'个人私有':'内置',state.defaultTemplate===t.id?'blue':'')}</div><div class="template-thumb ${own?.design.layout||t.id}" style="margin:20px 0">Aa<br><i></i><i></i><i></i></div><p class="label">${E(own?.sourceName||t.hint||'个人版式')} · 可编辑</p><div class="row" style="margin-top:18px">${act('template-preview','预览','btn sm',`data-id="${t.id}"`)}${act('template-default','设为默认','btn sm',`data-id="${t.id}"`)}${act('template-use','用它新建','btn sm primary',`data-id="${t.id}"`)}${act('template-export','导出模板','text-btn',`data-id="${t.id}"`)}${own?act('template-remove','移除','text-btn',`data-id="${t.id}"`):''}</div></section>`}).join('')}</div><section class="card" style="margin-top:24px"><h2>外部模板源文件</h2><p class="label">LaTeX、Typst、RenderCV YAML、HTML 等先保留源码，适配后才能用于可视化编辑。原型不会运行外部代码或伪装编译预览。</p>${state.privateTemplates.filter(t=>t.status==='source').map(t=>`<div class="task"><div class="grow"><h3>${E(t.name)}</h3><p class="meta">${E(t.sourceName)} · ${E(t.format)} · 待适配</p></div>${act('template-source','查看源码','btn sm',`data-id="${t.id}"`)}${act('template-adapt','创建适配副本','btn sm',`data-id="${t.id}"`)}${act('template-remove','移除','text-btn',`data-id="${t.id}"`)}</div>`).join('')||'<p class="empty">还没有导入外部源文件。</p>'}</section>`}
 const templateMarketBase=market;
 market=function(){return `<div class="tabs compact template-tabs">${act('template-view','模板与简历市场',templateView==='market'?'active':'','data-id="market"')}${act('template-view','我的模板',templateView==='mine'?'active':'','data-id="mine"')}</div>`+(templateView==='mine'?templateLibrary():`<div class="personal-template-banner"><span>已经有喜欢的模板？直接使用自己的。</span><div class="row">${act('template-import','导入模板','btn')}${act('my-templates','我的模板','text-btn')}</div></div>`+templateMarketBase())};
-function openTemplateImport(){pendingTemplate=null;modal('导入自己的模板',`<p>模板保存在当前浏览器的私人模板库，不需要通过市场购买。</p><label class="field" style="margin-top:18px"><span>选择模板文件</span><input id="template-file" type="file" accept=".json,.tex,.typ,.yaml,.yml,.html,.htm,.md,.markdown"></label><p class="meta">文本文件，最多 512 KB。原型仅在本机读取，不会上传。</p><div class="note"><strong>可直接使用：</strong>启程模板 JSON v1。<br><strong>保存源码待适配：</strong>LaTeX / Typst / YAML / HTML / Markdown。<br>PDF 是输出文件；DOCX、ZIP 完整工程的适配留待正式实现，当前不支持。</div><div class="row" style="margin-top:16px">${act('template-example','下载模板示例','text-btn')}${act('template-paste','粘贴模板 JSON','text-btn')}</div><div id="template-import-result" aria-live="polite"></div>`,act('close','取消','btn')+act('template-save','确认导入','btn primary','id="template-import-save" disabled'));document.getElementById('template-file').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;pendingTemplate=null;document.getElementById('template-import-save').disabled=true;const result=document.getElementById('template-import-result');result.textContent='正在读取…';try{if(f.size>512*1024)throw Error('文件超过 512 KB。请只选择模板文本文件。');const ext=f.name.split('.').pop().toLowerCase(),raw=await f.text();if(ext==='json'){const t=validateTemplate(JSON.parse(raw));pendingTemplate={...t,status:'ready',sourceName:f.name}}else{if(!['tex','typ','yaml','yml','html','htm','md','markdown'].includes(ext))throw Error('暂不支持此格式，请导入模板 JSON 或受支持的文本源码。');if(!raw.trim()||raw.includes('\u0000'))throw Error('文件为空或不是可读文本源码。');pendingTemplate={name:f.name.replace(/\.[^.]+$/,''),sourceName:f.name,source:raw,format:ext,status:'source'}}result.innerHTML=`<div class="note" style="margin-top:18px"><strong>${E(pendingTemplate.name)}</strong><br>${pendingTemplate.status==='ready'?'校验通过，可用于创建和编辑简历。':'仅保存原始源码，不执行。导入后会标记为待适配。'}</div>`;document.getElementById('template-import-save').disabled=false}catch(err){result.innerHTML=`<p class="error">${E(err instanceof SyntaxError?'JSON 格式错误，请检查引号与逗号。':err.message)}</p>`}}}
+// 文件导入是异步边界：只有当前弹窗中最后一次选择的结果有权更新预览和待保存模板。
+const MAX_TEMPLATE_FILE_BYTES=512*1024;
+let templateImportRevision=0;
+
+/** 只解析本机文本，不执行外部代码；返回经白名单校验的版式或待适配源码。 */
+async function readTemplateFile(file){
+ if(file.size>MAX_TEMPLATE_FILE_BYTES)throw Error('文件超过 512 KB。请只选择模板文本文件。');
+ const ext=file.name.split('.').pop().toLowerCase(),raw=await file.text();
+ if(ext==='json')return {...validateTemplate(JSON.parse(raw)),status:'ready',sourceName:file.name};
+ if(!['tex','typ','yaml','yml','html','htm','md','markdown'].includes(ext))throw Error('暂不支持此格式，请导入模板 JSON 或受支持的文本源码。');
+ if(!raw.trim()||raw.includes('\u0000'))throw Error('文件为空或不是可读文本源码。');
+ return {name:file.name.replace(/\.[^.]+$/,''),sourceName:file.name,source:raw,format:ext,status:'source'};
+}
+
+function openTemplateImport(){
+ const revision=++templateImportRevision;
+ pendingTemplate=null;
+ modal('导入自己的模板',`<p>模板保存在当前浏览器的私人模板库，不需要通过市场购买。</p><label class="field" style="margin-top:18px"><span>选择模板文件</span><input id="template-file" type="file" accept=".json,.tex,.typ,.yaml,.yml,.html,.htm,.md,.markdown"></label><p class="meta">文本文件，最多 512 KB。原型仅在本机读取，不会上传。</p><div class="note"><strong>可直接使用：</strong>启程模板 JSON v1。<br><strong>保存源码待适配：</strong>LaTeX / Typst / YAML / HTML / Markdown。<br>PDF 是输出文件；DOCX、ZIP 完整工程的适配留待正式实现，当前不支持。</div><div class="row" style="margin-top:16px">${act('template-example','下载模板示例','text-btn')}${act('template-paste','粘贴模板 JSON','text-btn')}</div><div id="template-import-result" aria-live="polite"></div>`,act('close','取消','btn')+act('template-save','确认导入','btn primary','id="template-import-save" disabled'));
+ const input=document.getElementById('template-file');
+ const result=document.getElementById('template-import-result');
+ const save=document.getElementById('template-import-save');
+ let selection=0;
+ input.onchange=async event=>{
+  const currentSelection=++selection,file=event.target.files?.[0];
+  pendingTemplate=null;save.disabled=true;result.textContent=file?'正在读取…':'';
+  // input 的节点身份排除弹窗被关闭后重新打开、或切换到粘贴导入的情况。
+  const ownsResult=()=>revision===templateImportRevision&&selection===currentSelection
+   &&document.getElementById('template-file')===input&&document.getElementById('dialog').open;
+  if(!file)return;
+  try{
+   const parsed=await readTemplateFile(file);
+   if(!ownsResult())return;
+   pendingTemplate=parsed;
+   result.innerHTML=`<div class="note" style="margin-top:18px"><strong>${E(parsed.name)}</strong><br>${parsed.status==='ready'?'校验通过，可用于创建和编辑简历。':'仅保存原始源码，不执行。导入后会标记为待适配。'}</div>`;
+   save.disabled=false;
+  }catch(error){
+   if(!ownsResult())return;
+   result.innerHTML=`<p class="error">${E(error instanceof SyntaxError?'JSON 格式错误，请检查引号与逗号。':error.message)}</p>`;
+  }
+ };
+}
 function createTemplate(sourceId){const src=state.privateTemplates.find(t=>t.id===sourceId);formModal(src?'创建可视化适配副本':'自定义自己的模板',field('模板名称','name',src?src.name+' · 可视化版':'我的模板')+selectField('基础版式','layout',[['classic','中文单栏'],['modern','蓝线强调'],['serif','经典衬线']],'classic')+selectField('字体风格','fontFamily',[['sans','无衬线'],['serif','衬线']],'sans')+`<div class="two-col">${field('主题色','accent','#2855e7','color')}${field('正文字号（11–18 px）','fontSize',13,'number')}</div><div class="two-col"><label class="field"><span>行高（1.2–2）</span><input name="lineHeight" type="number" min="1.2" max="2" step="0.1" value="1.6" required></label>${field('页边距（10–25 mm）','pageMargin',18,'number')}</div><p class="note">${src?'这是你手动建立的版式副本，不代表系统已转换原始源码。源文件继续保留供对照。':'只保存排版，不包含你的姓名、联系方式或经历。'}</p>`,'预览并确认',f=>{try{const obj={type:'qicheng-template',schemaVersion:1,name:f.get('name'),design:{layout:f.get('layout'),accent:f.get('accent'),fontFamily:f.get('fontFamily'),fontSize:Number(f.get('fontSize')),lineHeight:Number(f.get('lineHeight')),pageMargin:Number(f.get('pageMargin'))}};pendingTemplate={...validateTemplate(obj),status:'ready',sourceName:src?'手动适配自 '+src.sourceName:'自行设计',sourceId:src?.id};modal('确认模板版式',templatePreview(pendingTemplate),act('template-create','重新设置','btn')+act('template-save','保存到我的模板','btn primary'));document.getElementById('dialog').classList.add('wide')}catch(err){document.getElementById('form-error').textContent=err.message}})}
 function saveImportedTemplate(){if(!pendingTemplate)return;const t={id:'private-'+uid(),...clone(pendingTemplate)};state.privateTemplates.push(t);try{localStorage.setItem('qicheng-prototype-v1',JSON.stringify({...state,mode}))}catch{state.privateTemplates.pop();toast('本机存储空间不足，模板未保存。请先导出并清理不需要的内容。');return}pendingTemplate=null;close();if(templateReturn&&t.status==='ready'){const ctx=templateReturn;templateReturn=null;resumeWizard(ctx.source,ctx.jobId);if(ctx.name)document.querySelector('#modal-form [name="name"]').value=ctx.name;document.querySelector(`[name="template"][value="${t.id}"]`).checked=true;toast('已导入并选中自己的模板');return}templateReturn=null;templateView='mine';go('market');toast(t.status==='ready'?'模板已保存，可以用它创建简历':'源文件已保存，当前状态：待适配')}
 const beforeTemplatesWizard=resumeWizard;
