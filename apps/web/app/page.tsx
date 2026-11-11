@@ -86,7 +86,7 @@ export default function ConnectionPage() {
 
       <main>
         <div className="intro">
-          <p className="eyebrow">WORK IN PROGRESS</p>
+          <p className="eyebrow">Careerloom · 开发检查</p>
           <h1>从一条真实的连接开始。</h1>
           <p className="lead">Careerloom 的工作台正在搭建。这里用来检查 Web 与 API 的连接。</p>
         </div>

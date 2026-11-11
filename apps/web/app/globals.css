@@ -1,68 +1,32 @@
-/* 沿用交互原型的蓝色与浅灰底；本页为开发检查入口，不复制原型的模拟业务状态。 */
+/* T01b 连接检查沿用工作区的中性色、控件与字级；请求状态机仍由 page.tsx 管理。 */
 :root {
   color-scheme: light;
-  --blue: #2855e7;
-  --ink: #182337;
-  --muted: #5d6b80;
-  --line: #e3e8f1;
+  --ink: #292d34; --muted: #707987; --line: #e2e6ec; --bg: #f6f7f9;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: var(--ink);
-  background: #f7f8fb;
-  font-synthesis: none;
+  color: var(--ink); background: var(--bg); font-synthesis: none; -webkit-font-smoothing: antialiased;
 }
 * { box-sizing: border-box; }
-body { margin: 0; }
-a { color: inherit; }
-button { font: inherit; }
-a:focus-visible, button:focus-visible { outline: 3px solid #2855e7; outline-offset: 5px; }
-.page-shell { max-width: 1120px; margin: 0 auto; padding: 0 48px; min-height: 100svh; display: flex; flex-direction: column; }
-.page-header { display: flex; align-items: center; justify-content: space-between; padding: 32px 0; border-bottom: 1px solid var(--line); gap: 16px; }
-.brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-size: 22px; font-weight: 700; letter-spacing: -.6px; }
-.brand-mark { display: grid; place-items: center; width: 32px; height: 34px; color: #fff; background: var(--blue); border-radius: 9px; font-size: 26px; font-weight: 500; padding-bottom: 3px; }
-.environment-label { font-size: 12px; color: var(--muted); letter-spacing: .03em; }
-.environment-label span { padding: 0 10px; color: #a0aabb; }
-main { width: 100%; max-width: 688px; margin: 72px auto 64px; flex: 1; }
-.eyebrow { color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: .16em; margin: 0 0 18px; }
-h1 { font-size: clamp(27px, 4vw, 36px); font-weight: 650; letter-spacing: -.035em; line-height: 1.4; margin: 0 0 14px; }
-.lead { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.85; }
-.connection-panel { border: 1px solid var(--line); background: #fff; border-radius: 16px; margin-top: 36px; box-shadow: 0 8px 24px #18233704; overflow: hidden; }
-.panel-header { padding: 20px 26px; display: flex; gap: 10px; justify-content: space-between; border-bottom: 1px solid #eff1f6; font-size: 13px; font-weight: 600; }
-.panel-label { color: var(--muted); font-size: 12px; font-weight: 400; }
-.connection-result { text-align: center; padding: 34px 24px 0; }
-.status-symbol { display: grid; place-items: center; width: 50px; height: 50px; margin: 0 auto 18px; border-radius: 15px; background: #eef2ff; color: var(--blue); font-size: 26px; }
-.connected .status-symbol { color: #187a60; background: #eaf7f1; }
-.failed .status-symbol { color: #a34a21; background: #fff2e9; }
-.connection-result h2 { font-size: 22px; margin: 0 0 10px; line-height: 1.5; font-weight: 600; }
-.result-description { color: var(--muted); font-size: 14px; line-height: 1.8; min-height: 26px; margin: 0; }
-.connection-path { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 26px 16px 32px; color: var(--muted); font-size: 12px; }
-.connection-path span { background: #f7f8fb; border: 1px solid #edf0f6; border-radius: 5px; padding: 6px 15px; }
-.connection-path i { font-style: normal; color: #8794a7; }
-.panel-footer { border-top: 1px solid #eff1f6; padding: 18px 26px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-.check-time { color: var(--muted); font-size: 12px; margin: 0; }
-.check-time time { font-variant-numeric: tabular-nums; margin-left: 4px; }
-button { min-height: 42px; padding: 10px 16px; border: 1px solid var(--blue); border-radius: 8px; background: var(--blue); color: #fff; font-size: 13px; font-weight: 550; display: flex; align-items: center; gap: 14px; cursor: pointer; touch-action: manipulation; }
-button:hover:enabled { background: #2148c7; }
-button:disabled { cursor: wait; background: #eef2ff; color: #5264a5; border-color: #e0e6f6; }
-button span { font-size: 18px; line-height: 1; }
-.scope-note { display: flex; gap: 12px; margin-top: 22px; padding: 0 3px; }
-.note-icon { flex-shrink: 0; display: grid; place-items: center; border: 1px solid #94a0b1; border-radius: 50%; color: var(--muted); font-size: 11px; width: 16px; height: 16px; margin-top: 2px; }
-.scope-note h2 { margin: 0 0 6px; color: #46546a; font-size: 12px; font-weight: 600; }
-.scope-note p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
-.page-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px 0; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
-/* 320px 起保证文案可换行、按钮可触达；不依靠隐藏说明来适配移动端。 */
-@media (max-width: 600px) {
-  .page-shell { padding: 0 22px; }
-  .page-header { padding: 24px 0; }
-  .brand { font-size: 19px; }
-  .environment-label { font-size: 10px; }
-  .environment-label span { padding: 0 4px; }
-  main { margin: 46px auto; }
-  .lead { font-size: 14px; }
-  .panel-header, .panel-footer { padding: 17px; }
-  .connection-result { padding: 28px 18px 0; }
-  .connection-result h2 { font-size: 20px; }
-  .panel-footer { flex-wrap: wrap; }
-  .connection-path { gap: 10px; }
-  .connection-path span { padding: 6px 12px; }
-  .page-footer { flex-direction: column; gap: 7px; }
-}
+body { margin: 0; } a { color: inherit; } button { font: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid #7397d4; outline-offset: 4px; }
+.page-shell { max-width: 1160px; margin: auto; padding: 0 40px; min-height: 100dvh; display: flex; flex-direction: column; }
+.page-header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; border-bottom: 1px solid var(--line); gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 24px; font-weight: 650; letter-spacing: -.8px; }
+.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; color: #293b2d; background: #d8ebd5; font-size: 27px; line-height: 1; }
+.environment-label { font-size: 12px; color: var(--muted); }.environment-label span { padding: 0 10px; color: #9ba3ae; }
+main { width: 100%; margin: 80px auto; flex: 1; display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-content: center; align-items: center; }
+.intro { padding: 30px 22px 30px 0; }.eyebrow { color: #75838e; font-size: 12px; margin: 0 0 23px; }
+h1 { font-size: clamp(30px,3.3vw,42px); font-weight: 650; line-height: 1.45; letter-spacing: -.05em; margin: 0 0 22px; text-wrap: balance; }
+.lead { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.9; max-width: 27em; }
+.connection-panel { border: 1px solid var(--line); border-radius: 16px; background: #fff; overflow: hidden; box-shadow: 0 5px 18px #202b3805; }
+.panel-header { padding: 22px 26px; display: flex; gap: 10px; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 14px; font-weight: 600; }.panel-label { color: var(--muted); font-size: 11px; font-weight: 400; }
+.connection-result { text-align: center; padding: 32px 24px 0; }.status-symbol { display: grid; place-items: center; width: 50px; height: 50px; margin: 0 auto 18px; border-radius: 14px; background: #edf4e9; color: #5a7852; font-size: 25px; }.failed .status-symbol { color: #9e6949; background: #faf0e6; }.checking .status-symbol { color: #7385a1; background: #eef2f8; }
+.connection-result h2 { font-size: 23px; line-height: 1.5; font-weight: 650; margin: 0 0 10px; }.result-description { color: var(--muted); font-size: 12px; line-height: 1.8; min-height: 26px; margin: 0; }
+.connection-path { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 25px 16px 30px; color: #677587; font-size: 11px; }.connection-path span { background: #f6f7f9; border: 1px solid #e5e9ef; border-radius: 6px; padding: 6px 15px; }.connection-path i { font-style: normal; color: #9aa5b2; }
+.panel-footer { border-top: 1px solid var(--line); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; background: #fcfcfd; }.check-time { color: var(--muted); font-size: 11px; margin: 0; }.check-time time { font-variant-numeric: tabular-nums; margin-left: 4px; }
+button { min-height: 38px; padding: 9px 14px; border: 1px solid #292d34; border-radius: 8px; background: #292d34; color: #fff; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 12px; cursor: pointer; touch-action: manipulation; transition: background-color .16s; }button:hover:enabled { background: #41464f; }button:active:enabled { transform: translateY(1px); }button:disabled { cursor: wait; background: #e9edf2; color: #788391; border-color: #e0e5eb; }button span { font-size: 18px; line-height: 1; }
+.scope-note { grid-column: 1/-1; display: flex; gap: 12px; padding: 22px 24px; background: #edf1f5; border: 1px solid #e1e7ee; border-radius: 12px; }.note-icon { flex-shrink: 0; display: grid; place-items: center; border: 1px solid #97a4b6; border-radius: 50%; color: #6e7d92; font-size: 11px; width: 17px; height: 17px; margin-top: 2px; }.scope-note h2 { margin: 0 0 6px; font-size: 12px; font-weight: 600; }.scope-note p { margin: 0; color: #6b788b; font-size: 12px; line-height: 1.8; }
+.page-footer { display: flex; justify-content: space-between; gap: 20px; padding: 25px 0; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+/* 中屏合并为单栏；允许重试和时间换行，避免错误说明把面板撑出屏幕。 */
+@media (max-width: 850px) { main { grid-template-columns: 1fr; max-width: 600px; margin: 38px auto; gap: 24px; }.intro { padding: 12px 0; }h1 { font-size: 34px; }.eyebrow { margin-bottom: 18px; } }
+@media (max-width: 600px) { .page-shell { padding: 0 20px; }.page-header { padding: 22px 0; }.brand { font-size: 21px; }.brand-mark { width: 31px; height: 31px; font-size: 24px; }.environment-label { font-size: 10px; }.environment-label span { padding: 0 4px; }main { margin: 28px auto; }h1 { font-size: 30px; }.lead { font-size: 13px; }.panel-header,.panel-footer { padding: 17px; }.panel-footer { flex-wrap: wrap; }.connection-result { padding: 25px 18px 0; }.connection-result h2 { font-size: 21px; }.connection-path { gap: 10px; }.connection-path span { padding: 6px 12px; }.scope-note { padding: 19px; }.page-footer { flex-direction: column; gap: 7px; } }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }

@@ -16,3 +16,5 @@ __pycache__/
 # Compiled production sources; prototype/dist remains tracked.
 apps/*/build/
 *.tsbuildinfo
+# 本地浏览器截图与检查记录，不作为产品资产提交。
+.playwright-mcp/

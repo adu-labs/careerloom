@@ -12,7 +12,7 @@ Careerloom 是面向职业积累与求职的 AI 工作台：记录工作与学�
 
 本仓库保存产品研究、技术方案、实施规划、可交互原型，以及正在实现的正式项目代码。已完成 API 启动与 Web 连接检查，均待用户 review；尚未实现生产业务或上线。原型中的身份、交易和部分 AI 功能是演示，不代表生产能力。
 
-Careerloom 为已确定的项目名。历史文档和原型中的“启程 / Qicheng”属于早期名称，暂保留以便追溯。项目归属 `adu-labs`。开发阶段仓库公开，计划在准备正式上线时重新设为私有；公开期间的已有克隆或分叉无法通过修改可见性收回。
+Careerloom 为已确定的项目名。历史文档和原型数据格式中的“启程 / Qicheng”属于早期名称，暂保留以便追溯。项目归属 `adu-labs`。开发阶段仓库公开，计划在准备正式上线时重新设为私有；公开期间的已有克隆或分叉无法通过修改可见性收回。
 
 ## 文档入口
 
@@ -58,13 +58,15 @@ npm run dev:web
 
 ## 原型预览
 
+2026-11-11 按反馈完成现有工作台视觉修订：重排今日任务与日历，统一导航、表单、编辑器与手机布局；已于 2026-11-11 获用户确认，并授权完善后发布，当前已发布，见 [UI01 实现与教学](docs/learning/UI01-workspace-ui.md)。
+
 `prototype/dist/` 是当前原型的直接维护文件，纳入版本控制。以下本地预览命令供权利人及取得相应授权的维护者使用；列出命令本身不授予运行或部署许可：
 
 ```sh
 python3 -m http.server 8080 --directory prototype/dist
 ```
 
-打开 http://localhost:8080 。原型主要使用浏览器本地数据，详见[原型说明](prototype/README.md)。已有 Sites 部署仍使用其原名称，本次建立仓库不重新部署网站。
+打开 http://localhost:8080 。原型主要使用浏览器本地数据，详见[原型说明](prototype/README.md)。已发布至 [Careerloom](https://qicheng-career-workbench.hlb424559864.chatgpt.site)，沿用原项目、网址和仅本人访问范围。本轮发布的是静态交互原型，发布记录与教学见 UI01 文档。
 
 ## 工程约定
 
@@ -80,3 +82,5 @@ Agent 开发以 [AGENTS.md](AGENTS.md) 为准：前后端充分注释；每个�
 
 - [T01a API启动、配置校验与存活检查](docs/implementation-review/T01a-api-bootstrap.md)，代码基线 `6fa40c5`。
 - [T01b Web骨架与API连接](docs/implementation-review/T01b-web-bootstrap.md)，代码基线 `c36c7a5`。
+
+已通过：[UI01 工作台界面实现与教学](docs/learning/UI01-workspace-ui.md)，2026-11-11 用户确认；源码哈希及发布记录见文档。
