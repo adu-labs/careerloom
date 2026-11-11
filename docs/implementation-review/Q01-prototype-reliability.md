@@ -2,7 +2,7 @@
 
 - 状态：实现与验证完成，待用户审阅；不沿用 UI01 批准覆盖新增行为。
 - 日期：2026-11-11。
-- 基础提交：`a75d485`。当前精确文件哈希见文末；本轮使用独立分支 `codex/q01-project-quality`。
+- 实现提交：`b42f373`；基础提交：`a75d485`。当前精确文件哈希见文末；本轮使用独立分支 `codex/q01-project-quality`。
 - 范围：现有原型与工程检查。未开始的生产业务功能仍按原任务推进。
 
 ## 1. 目标与实际结果
@@ -75,7 +75,7 @@ localStorage 原键 → JSON 解析与集合校验
 | 小屏 | 上述新流程 390/320px 无整页横向溢出，无捕获的脚本错误 |
 | 独立代码审阅 | 后端审阅未发现高置信度问题；新增存储与导入修复只读审阅未发现需追加修复的问题 |
 
-最终本机统一检查通过：npm run check（27 项回归、API/Web 类型、5 个原型脚本和 27 份 Markdown 相对链接），npm run build 通过。升级依赖后的真实 API/Web 成功→停止 API 失败→恢复重试成功也已验证。远端 CI 结果另行补记，不把工作流文件存在描述成云端通过。
+最终本机统一检查通过：npm run check（27 项回归、API/Web 类型、5 个原型脚本和 27 份 Markdown 相对链接），npm run build 通过。升级依赖后的真实 API/Web 成功→停止 API 失败→恢复重试成功也已验证。远端 CI 运行见 [当前分支工作流](https://github.com/adu-labs/careerloom/actions/workflows/ci.yml?query=branch%3Acodex%2Fq01-project-quality)，实际结果在交付中报告，不把工作流文件存在描述成云端通过。
 
 复现命令：
 
@@ -90,6 +90,8 @@ python3 -m http.server 8080 --bind 127.0.0.1 --directory prototype/dist
 ```
 
 请用隐私窗口或独立浏览器测试，不往日常资料中写入损坏样例。测试恢复流程时先通过控制台设置虚构 `{broken` 再刷新；这一步只用于隔离测试。
+
+云端验证：代码提交 `eda029d` 的 [GitHub Actions 运行](https://github.com/adu-labs/careerloom/actions/runs/43030993737) 已于 2026-11-11 完成并返回 success，包含干净安装、依赖审计、统一 check 和 build。后续仅文档基线补记，运行时代码与锁文件哈希不变。
 
 ## 6. 审阅关注点、限制与回滚
 

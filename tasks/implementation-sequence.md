@@ -1,6 +1,6 @@
 # Careerloom：逐功能实现与 Review 规划
 
-更新：2026-09-22。用户已授权按既定技术栈开始实施。本文是当前执行顺序，范围与详细任务仍以 [总体规划](plan.md)、[任务清单](todo.md)、[Agent 工作台任务](agent-workspace.md)、[扩展任务](extension.md)为依据。
+更新：2026-11-11。用户已授权按既定技术栈开始实施。本文是当前执行顺序，范围与详细任务仍以 [总体规划](plan.md)、[任务清单](todo.md)、[Agent 工作台任务](agent-workspace.md)、[扩展任务](extension.md)为依据。
 
 ## 1. 交付方式
 

@@ -3,7 +3,7 @@
 - 状态：待用户审阅；不将 Q01、UI01 或本次 Agent 自审视为后端功能批准。
 - 日期：2026-11-11。
 - 范围：API/Web 依赖清单、共享锁文件与 CI 的依赖公告检查。接口与业务源码未因该项修改。
-- 基础：Q01 提交 `b42f373` 之上的依赖更新；最终文件哈希见文末。
+- 实现提交：`eda029d`。基础：Q01 提交 `b42f373` 之上的依赖更新；最终文件哈希见文末。
 
 ## 1. 目标与实际结果
 
@@ -59,7 +59,7 @@
 | 实际 API/Web/浏览器 | 固定成功契约、no-store；停止 API 后明确失败；恢复 API 后重试成功 |
 | 连接页宽度 | 1440、390、320px 无整页溢出 |
 
-没有为安全升级改写 API/Web 行为测试。外网只用于 npm 元数据/安装/公告检查，真实集成仅访问本机端口。云端 CI 在提交后单独记录。
+没有为安全升级改写 API/Web 行为测试。外网只用于 npm 元数据/安装/公告检查，真实集成仅访问本机端口。云端 CI 运行见 [当前分支工作流](https://github.com/adu-labs/careerloom/actions/workflows/ci.yml?query=branch%3Acodex%2Fq01-project-quality)，实际结果在交付中单独报告。
 
 复现：
 
@@ -71,6 +71,8 @@ npm run build
 ```
 
 真实集成按根 README 启动 API 与 Web：检查成功、停止 API 后失败、恢复后重试。测试使用合成本机服务，不向外部地址发送业务数据；npm registry 查询只获取依赖信息。
+
+云端验证：代码提交 `eda029d` 的 [GitHub Actions 运行](https://github.com/adu-labs/careerloom/actions/runs/43030993737) 已于 2026-11-11 完成并返回 success，包含干净安装、依赖审计、统一 check 和 build。后续仅文档基线补记，运行时代码与锁文件哈希不变。
 
 ## 5. 取舍、限制与审阅
 
