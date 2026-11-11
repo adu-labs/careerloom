@@ -41,7 +41,7 @@ flowchart LR
 
 ## 3. 工作目录建议
 
-以下目录尚未创建为生产项目，仅作为任务定位；不覆盖 `prototype/`：
+`apps/api/` 与 `apps/web/` 已开始按 T01a/T01b 实现，尚待 review。以下其余目录仍作为任务定位；不覆盖 `prototype/`：
 
 ```text
 apps/web/                    页面、交互、各角色工作区
