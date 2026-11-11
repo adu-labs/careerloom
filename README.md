@@ -36,7 +36,7 @@ npm run check
 npm run build
 ```
 
-`npm run check` 执行 API/Web 类型检查、原型资源与语法检查、文档相对链接检查，以及全部 27 项回归（API 8、Web 10、原型 9）。`npm run build` 编译 API 与 Web。HTTP 测试会监听本机临时端口，需要允许本地网络。GitHub Actions 使用相同命令；推送与 PR 自动检查，不执行部署。
+`npm run check` 执行 API/Web 类型检查、原型资源与语法检查、文档相对链接检查，以及全部 27 项回归（API 8、Web 10、原型 9）。`npm run build` 编译 API 与 Web。HTTP 测试会监听本机临时端口，需要允许本地网络。GitHub Actions 使用相同命令，并以 npm audit 检查高危/严重依赖公告；推送与 PR 自动检查，不执行部署。
 
 分别在两个终端启动：
 
@@ -71,6 +71,8 @@ python3 -m http.server 8080 --directory prototype/dist
 ## 本轮质量完善
 
 Q01 修复了空简历库刷新、模板名称转义、文件读取竞争与损坏快照保护，并加入自动检查；实现与验证完成，用户审阅待完成，见 [Q01 审阅记录](docs/implementation-review/Q01-prototype-reliability.md)。该变更尚未替换已发布的 UI01 v4。
+
+Q02 将 NestJS 更新至 12.4.2、Next.js 更新至 16.4.6，并更新受影响的传递依赖；安全告警已降为 0，验证与兼容范围见 [Q02 审阅记录](docs/implementation-review/Q02-framework-security.md)，用户审阅待完成。
 
 ## 工程约定
 

@@ -14,6 +14,8 @@
 
 2026-11-11 质量专项 **Q01**：原型稳定性、数据恢复、导入安全与项目自动检查已实现，用户审阅待完成；见 [Q01 审阅记录](../docs/implementation-review/Q01-prototype-reliability.md)。这不是对 T01a/T01b 功能审阅的批准。
 
+2026-11-11 安全专项 **Q02**：框架与传递依赖保持同一大版本升级，告警降为 0，27 项回归及构建通过，用户审阅待完成；见 [Q02 审阅记录](../docs/implementation-review/Q02-framework-security.md)。
+
 原 T01 的 API/Web/数据库分别 review，不再用一个“脚手架”任务掩盖多种验收。
 
 | 项目 | 交付与验收 | 前置 | 状态 |
